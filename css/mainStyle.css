@@ -1,0 +1,542 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Arial', sans-serif;
+}
+
+body {
+	background-color: white;
+	color: #333;
+	padding-top: 0 !important;
+}
+
+/* Хедер */
+.top-header {
+	background-color: #b09b7b;
+	color: white;
+	padding: 12px 0;
+	font-size: 14px;
+}
+
+.header-menu {
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	flex-wrap: wrap;
+	gap: 25px;
+	margin: 0;
+	padding: 0;
+}
+
+.middle-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 40px;
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+}
+
+.social-icons,
+.action-icons {
+	display: flex;
+	gap: 20px;
+}
+
+.social-icons i,
+.action-icons i {
+	font-size: 18px;
+	color: #333;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+
+.social-icons i:hover,
+.action-icons i:hover {
+	opacity: 0.7;
+}
+
+.logo img {
+	height: 40px;
+}
+
+.bottom-header {
+	background-color: #fff;
+	padding: 15px 0;
+	border-bottom: 1px solid #eee;
+}
+
+.nav-menu {
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	flex-wrap: wrap;
+	gap: 25px;
+	font-size: 14px;
+	font-weight: 600;
+	text-transform: uppercase;
+	margin: 0;
+	padding: 0;
+}
+
+/* Корзина */
+.cart-modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+	overflow-y: auto;
+}
+
+.cart-content {
+	background-color: white;
+	margin: 30px auto;
+	padding: 30px;
+	width: 90%;
+	max-width: 900px;
+	border-radius: 4px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-modal {
+	float: right;
+	font-size: 24px;
+	cursor: pointer;
+	color: #777;
+}
+
+.cart-content h2 {
+	font-size: 24px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.cart-header {
+	display: grid;
+	grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+	padding: 15px 0;
+	border-bottom: 1px solid #eee;
+	font-weight: bold;
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+.cart-item {
+	display: grid;
+	grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+	align-items: center;
+	padding: 20px 0;
+	border-bottom: 1px solid #eee;
+}
+
+.item-product {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.product-image {
+	width: 80px;
+	height: 80px;
+	background-color: #f8f8f8;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.product-image img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.product-name {
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+
+.product-details {
+	font-size: 13px;
+	color: #777;
+}
+
+.item-price,
+.item-total {
+	font-weight: 500;
+}
+
+.item-quantity {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.quantity-btn {
+	width: 28px;
+	height: 28px;
+	border: 1px solid #ddd;
+	background: none;
+	cursor: pointer;
+	font-size: 14px;
+	border-radius: 3px;
+}
+
+.remove-btn {
+	background: none;
+	border: none;
+	color: #777;
+	cursor: pointer;
+	font-size: 13px;
+	text-decoration: underline;
+}
+
+.remove-btn:hover {
+	color: #d32f2f;
+}
+
+.cart-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 30px;
+	padding-top: 20px;
+	border-top: 1px solid #eee;
+}
+
+.total-sum {
+	font-size: 18px;
+}
+
+.total-price {
+	font-weight: bold;
+	margin-left: 10px;
+}
+
+.checkout-btn {
+	background-color: #b09b7b;
+	color: white;
+	border: none;
+	padding: 14px 40px;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 500;
+	transition: background 0.2s;
+}
+
+.checkout-btn:hover {
+	background-color: #86755b;
+}
+
+/* Основной контент */
+.header {
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.header h1 {
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #333;
+	margin-bottom: 20px;
+	font-size: 2.5rem;
+}
+
+.series-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+.series-card {
+	background: white;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	margin-bottom: 30px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #eee;
+}
+
+.series-card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.series-img-container {
+	height: 250px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background: #f1f1f1;
+}
+
+.series-img {
+	max-height: 100%;
+	max-width: 100%;
+	object-fit: contain;
+	transition: transform 0.3s;
+}
+
+.series-card:hover .series-img {
+	transform: scale(1.05);
+}
+
+.series-info {
+	padding: 25px;
+	text-align: center;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.series-name {
+	font-weight: 700;
+	font-size: 1.5rem;
+	margin-bottom: 15px;
+	color: #333;
+}
+
+.series-desc {
+	color: #666;
+	font-size: 1rem;
+	line-height: 1.5;
+	min-height: 60px;
+	margin-bottom: 10px;
+}
+
+.btn-more {
+	display: inline-block;
+	margin: 0 auto;
+	padding: 10px 25px;
+	background: #333;
+	color: white;
+	border-radius: 5px;
+	text-decoration: none;
+	transition: all 0.3s;
+	font-weight: 600;
+	border: 2px solid #333;
+}
+
+.btn-more:hover {
+	background: transparent;
+	color: #333;
+}
+
+.brand-section {
+	margin-bottom: 60px;
+}
+
+.slider-container {
+	display: flex;
+	max-width: 1200px;
+	margin: 50px auto;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+#shoeCarousel {
+	display: flex;
+	width: 100%;
+	height: 600px;
+}
+
+.carousel-inner-container {
+	width: 60%;
+	position: relative;
+	background-color: #f8f9fa;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.carousel-inner {
+	width: 100%;
+	height: 100%;
+}
+
+.image-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.centered-image {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	margin: auto;
+}
+
+.fixed-images {
+	width: 40%;
+	display: flex;
+	flex-direction: column;
+}
+
+.fixed-image {
+	width: 100%;
+	height: calc(600px / 3);
+	object-fit: contain; /* Вместо cover */
+	object-position: center;
+	border-left: 1px solid #eee;
+	background: white; /* Фон для пустых областей */
+}
+
+.fixed-image:not(:last-child) {
+	border-bottom: 1px solid #eee; /* Цвет как у border-left */
+}
+
+.text-price {
+	margin-bottom: 20px; /* Регулируй значение по желанию (8px, 12px и т.д.) */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+	width: 40px;
+	height: 40px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 50%;
+	top: 50%;
+	transform: translateY(-50%);
+	opacity: 0.8;
+	transition: opacity 0.3s;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+	opacity: 1;
+}
+
+.carousel-control-prev {
+	left: 20px;
+}
+
+.carousel-control-next {
+	right: 20px;
+}
+
+.footer {
+	background-color: #000;
+	color: #fff;
+	padding: 20px 0;
+	margin-top: 50px;
+}
+
+.footer-text {
+	margin: 0;
+	font-size: 1rem;
+}
+
+.nav-item {
+	position: relative;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.nav-item > span {
+	position: relative;
+	padding: 5px 0;
+}
+
+.nav-item > span::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background-color: #b09b7b;
+	transition: width 0.3s ease;
+}
+
+.nav-item:hover > span::after {
+	width: 100%;
+}
+
+.nav-item:hover {
+	color: #b09b7b;
+}
+
+.dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: white;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 20px;
+	z-index: 1000;
+	width: 600px;
+	opacity: 0;
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	transform: translateX(-50%) translateY(10px);
+}
+
+.nav-item:hover .dropdown-menu {
+	display: block;
+	opacity: 1;
+	transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-content {
+	display: flex;
+	justify-content: space-between;
+}
+
+.dropdown-column {
+	flex: 1;
+	padding: 0 15px;
+}
+
+.dropdown-column h4 {
+	font-size: 14px;
+	margin-bottom: 15px;
+	color: #333;
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+.dropdown-column ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.dropdown-column li {
+	margin-bottom: 10px;
+	font-size: 13px;
+	color: #666;
+	cursor: pointer;
+	transition: color 0.2s;
+}
+
+.dropdown-column li:hover {
+	color: #b09b7b;
+}
+
+/* Для SALE просто ссылка */
+.nav-item a {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.3s;
+}
+
+.nav-item a:hover {
+	color: #b09b7b;
+}
+
