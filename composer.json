@@ -1,0 +1,10 @@
+{
+    "require": {
+        "google/apiclient": "2.0",
+      "ext-dom": "*",
+        "cboden/ratchet": "^0.4.2",
+        "react/event-loop": "^1.5",
+        "react/socket": "^1.16",
+        "liqpay/liqpay": "^1.4"
+    }
+}

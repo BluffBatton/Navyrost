@@ -1,0 +1,75 @@
+.rating-stars {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        .rating-stars input[type="radio"] {
+            display: none;
+        }
+        .rating-stars label {
+            font-size: 24px;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .rating-stars input[type="radio"]:checked ~ label,
+        .rating-stars label:hover,
+        .rating-stars label:hover ~ label {
+            color: #ffc107;
+        }
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .product-rating-value {
+            font-weight: bold;
+            color: #b09b7b;
+        }
+        .product-rating-count {
+            color: #777;
+            font-size: 14px;
+        }
+        .comment-form {
+            margin-bottom: 30px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 100px;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .comment {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+        }
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .delete-comment {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+        }

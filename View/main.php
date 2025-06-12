@@ -1,19 +1,30 @@
 <?php
+// Подключение языка
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_GET['lang'])) {
+    $_SESSION['lang'] = $_GET['lang'];
+}
+$lang = $_SESSION['lang'] ?? 'ua';
+$translations = include __DIR__ . '/../lang.php';
+$t = $translations[$lang];
+
+// Проверка слайдера
 if (!isset($sliderImages) || !is_array($sliderImages)) {
     $sliderImages = [];
 }
-
-$baseUrl = '/Navyrost'; 
+ 
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="<?= $lang ?>">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ALL STARS</title>
+    <title><?= $t['title'] ?? 'Головна' ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/Navyrost/css/mainStyle.css" />
+    <link rel="stylesheet" href="/css/mainStyle.css" />
 </head>
 <body>
 <main>
@@ -25,45 +36,35 @@ $baseUrl = '/Navyrost';
                         <div class="carousel-item<?= $index === 0 ? ' active' : '' ?>">
                             <div class="image-container">
                                 <img
-                                        src="<?= $baseUrl ?>/pic/<?= htmlspecialchars($file) ?>"
-                                        class="d-block centered-image"
-                                        alt="Slider Image <?= $index + 1 ?>"
+                                    src="/pic/<?= htmlspecialchars($file) ?>"
+                                    class="d-block centered-image"
+                                    alt="Slider Image <?= $index + 1 ?>"
                                 />
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
 
-                <button
-                        class="carousel-control-prev"
-                        type="button"
-                        data-bs-target="#shoeCarousel"
-                        data-bs-slide="prev"
-                >
+                <button class="carousel-control-prev" type="button" data-bs-target="#shoeCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                    <span class="visually-hidden"><?= $t['prev'] ?? 'Previous' ?></span>
                 </button>
-                <button
-                        class="carousel-control-next"
-                        type="button"
-                        data-bs-target="#shoeCarousel"
-                        data-bs-slide="next"
-                >
+                <button class="carousel-control-next" type="button" data-bs-target="#shoeCarousel" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
+                    <span class="visually-hidden"><?= $t['next'] ?? 'Next' ?></span>
                 </button>
             </div>
 
             <div class="fixed-images">
-                <img src="<?= $baseUrl ?>/pic/fixed1.png" alt="VIP Brand" class="fixed-image" />
-                <img src="<?= $baseUrl ?>/pic/fixed2.png" alt="DIR Brand" class="fixed-image" />
-                <img src="<?= $baseUrl ?>/pic/fixed3.png" alt="New Balance" class="fixed-image" />
+                <img src="/pic/fixed1.png" alt="VIP Brand" class="fixed-image" />
+                <img src="/pic/fixed2.png" alt="DIR Brand" class="fixed-image" />
+                <img src="/pic/fixed3.png" alt="New Balance" class="fixed-image" />
             </div>
         </div>
     </div>
 
     <div class="container series-container">
-        <div class="header"><h1>Наші новинки</h1></div>
+        <div class="header"><h1><?= $t['new_arrivals'] ?? 'Наші новинки' ?></h1></div>
         <div class="row brand-section">
             <?php foreach ($this->products as $item): ?>
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
@@ -80,8 +81,8 @@ $baseUrl = '/Navyrost';
                                 <h5 class="text-price">
                                     <?= number_format($item->price, 0, ',', ' ') ?> грн.
                                 </h5>
-                                <a href="<?= $baseUrl ?>/View/cloth.php?id=<?= $item->id ?>" class="btn-more">
-                                    Детальніше
+                                <a href="/View/cloth.php?id=<?= $item->id ?>" class="btn-more">
+                                    <?= $t['details'] ?? 'Детальніше' ?>
                                 </a>
                             </div>
                         </div>
@@ -92,6 +93,6 @@ $baseUrl = '/Navyrost';
     </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<?= $baseUrl ?>/script/script.js"></script>
+<script src="/script/script.js"></script>
 </body>
 </html>

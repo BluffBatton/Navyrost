@@ -1,0 +1,17 @@
+.product-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .product-card {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .size-option.selected {
+            background-color: #b09b7b;
+            color: white;
+        }

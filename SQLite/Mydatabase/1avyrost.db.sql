@@ -1,0 +1,76 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS categories (
+  id   INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT    NOT NULL UNIQUE
+);
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sender_id INTEGER NOT NULL,
+    receiver_id INTEGER NOT NULL,
+    message TEXT NOT NULL,
+    sent_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS colors (
+  id   INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT    NOT NULL UNIQUE
+);
+CREATE TABLE IF NOT EXISTS comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  text TEXT NOT NULL,
+  rating INTEGER CHECK(rating BETWEEN 1 AND 5),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS notifications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  message TEXT NOT NULL,
+  is_read BOOLEAN DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS product_categories (
+  product_id  INTEGER NOT NULL REFERENCES products(id)  ON DELETE CASCADE,
+  category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  PRIMARY KEY (product_id, category_id)
+);
+CREATE TABLE IF NOT EXISTS product_colors (
+  product_id INTEGER NOT NULL REFERENCES products(id)  ON DELETE CASCADE,
+  color_id   INTEGER NOT NULL REFERENCES colors(id)    ON DELETE CASCADE,
+  PRIMARY KEY (product_id, color_id)
+);
+CREATE TABLE IF NOT EXISTS product_sizes (
+  product_id INTEGER NOT NULL REFERENCES products(id)  ON DELETE CASCADE,
+  size_id    INTEGER NOT NULL REFERENCES sizes(id)     ON DELETE CASCADE,
+  PRIMARY KEY (product_id, size_id)
+);
+CREATE TABLE IF NOT EXISTS products (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  name        TEXT    NOT NULL,
+  price       REAL    NOT NULL,
+  image       TEXT,
+  description TEXT,
+  gender      TEXT,
+  brand       TEXT
+  -- без category чи color: ці атрибути винесемо в окремі таблиці
+);
+CREATE TABLE IF NOT EXISTS sessions (
+    session_id TEXT PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS sizes (
+  id   INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT    NOT NULL UNIQUE
+);
+CREATE TABLE IF NOT EXISTS users (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+firstname TEXT NOT NULL,
+lastname TEXT NOT NULL,
+email TEXT NOT NULL,
+phonenumber TEXT,
+password TEXT NOT NULL,
+role TEXT DEFAULT 'user' CHECK(role in ('user', 'admin'))
+);
+COMMIT;

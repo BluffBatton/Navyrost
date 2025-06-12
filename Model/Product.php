@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../functions/Database.php';
+
 class Product
 {
     public $id;
@@ -12,35 +14,215 @@ class Product
     public $size;
     public $color;
 
-    public function __construct($id, $name, $category, $gender, $price, $image, $description, $brand, $size, $color)
+    
+
+    public function __construct(array $data)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->category = $category;
-        $this->gender = $gender;
-        $this->price = $price;
-        $this->image = $image;
-        $this->description = $description;
-        $this->brand = $brand;
-        $this->size = $size;
-        $this->color = $color;
+        $this->id = $data['id'] ?? null;
+        $this->name = $data['name'] ?? '';
+        $this->price = $data['price'] ?? 0;
+        $this->image = $data['image'] ?? '';
+        $this->description = $data['description'] ?? '';
+        $this->gender = $data['gender'] ?? '';
+        $this->brand = $data['brand'] ?? '';
+        $this->category = $data['category'] ?? null;
+        $this->size = !empty($data['sizes']) ? explode(',', $data['sizes']) : [];
+        $this->color = !empty($data['colors']) ? explode(',', $data['colors']) : [];
     }
 
-    public static function generateDummyData()
+    public static function fetchAll(array $filters = [])
     {
-        return [
-            new self(1, 'Футболка Adidas', 'Футболки', 'Чоловічій', 1200, 'pic/nv3.png', 'Класична футболка для спорту', 'Adidas', ['S', 'M', 'L'], 'Білий'),
-            new self(2, 'Шорти Nike', 'Шорти', 'Чоловічій', 2000, 'pic/nv11.png', 'Легкі шорти для тренувань', 'Nike', ['L', 'XL'], 'Чорний'),
-            new self(3, 'Кофта Puma Hoodie', 'Кофти', 'Жіночій', 3500, 'pic/slider4.png', 'Тепла та зручна кофта', 'Puma', ['M', 'L', 'XL'], 'Сірий'),
-            new self(4, 'Кросівки Reebok Runner', 'Кросівки', 'Чоловічій', 4200, 'pic/yung1.png', 'Ідеальні для бігу', 'Reebok', ['41', '42', '43'], 'Синій'),
-            new self(5, 'Штани Jordan', 'Штани', 'Чоловічій', 4500, 'pic/nv6.png', 'Спортивні штани для активного відпочинку', 'Jordan', ['M', 'L', 'XL'], 'Червоний'),
-            new self(6, 'Футболка Under Armour', 'Футболки', 'Чоловічій', 1300, 'pic/slider5.png', 'Рекомендується для інтенсивних тренувань', 'Under Armour', ['S', 'M', 'L'], 'Синій'),
-            new self(7, 'Шорти Asics', 'Шорти', 'Жіночій', 1800, 'pic/nv11.png', 'Шорти для залу та відпочинку', 'Asics', ['M', 'L'], 'Білий'),
-            new self(8, 'Кофта The North Face', 'Кофти', 'Чоловічій', 4000, 'pic/slider1.png', 'Зручна кофта для холодної погоди', 'The North Face', ['S', 'M', 'L'], 'Чорний'),
-            new self(9, 'Кросівки New Balance 574', 'Кросівки', 'Чоловічій', 5000, 'pic/New_Balance.png', 'Класичні кросівки для прогулянок', 'New Balance', ['40', '41', '42'], 'Сірий'),
-            new self(10, 'Штани Adidas Joggers', 'Штани', 'Чоловічій', 3000, 'pic/slider6.png', 'Легкі та стильні штани', 'Adidas', ['L', 'XL'], 'Оливковий'),
-            new self(11, 'Футболка Lacoste', 'Футболки', 'Чоловічій', 2500, 'pic/slider2.png', 'Елегантна футболка із логотипом', 'Lacoste', ['S', 'M'], 'Чорний'),
-            new self(12, 'Шорти Columbia', 'Шорти', 'Чоловічій', 2200, 'pic/nv6.png', 'Шорти для подорожей і трекінгу', 'Columbia', ['L', 'XL'], 'Хакі'),
-        ];
+        $db = new Database(__DIR__ . '/../SQLite/Mydatabase/Navyrost.db');
+        
+        $sql = "SELECT 
+                p.id, p.name, p.price, p.image, p.description,
+                p.gender, p.brand,
+                (SELECT GROUP_CONCAT(DISTINCT s.name) 
+                 FROM product_sizes ps 
+                 JOIN sizes s ON ps.size_id = s.id 
+                 WHERE ps.product_id = p.id) AS sizes,
+                (SELECT GROUP_CONCAT(DISTINCT c.name) 
+                 FROM product_colors pc 
+                 JOIN colors c ON pc.color_id = c.id 
+                 WHERE pc.product_id = p.id) AS colors,
+                (SELECT GROUP_CONCAT(DISTINCT cat.name)
+                 FROM product_categories pc
+                 JOIN categories cat ON pc.category_id = cat.id
+                 WHERE pc.product_id = p.id) AS category
+            FROM products p
+            WHERE 1=1";
+        
+        $params = [];
+        
+        // обробка фільтрів
+        if (!empty($filters['gender'])) {
+            $sql .= " AND p.gender = :gender";
+            $params['gender'] = $filters['gender'];
+        }
+        
+        if (!empty($filters['brands'])) {
+            $brands = is_array($filters['brands']) ? $filters['brands'] : explode(',', $filters['brands']);
+            $placeholders = [];
+            foreach ($brands as $i => $brand) {
+                $paramName = 'brand_' . $i;
+                $placeholders[] = ':' . $paramName;
+                $params[$paramName] = $brand;
+            }
+            $sql .= " AND p.brand IN (" . implode(',', $placeholders) . ")";
+        }
+        
+        if (!empty($filters['categories'])) {
+            $categories = is_array($filters['categories']) ? $filters['categories'] : explode(',', $filters['categories']);
+            $placeholders = [];
+            foreach ($categories as $i => $category) {
+                $paramName = 'category_' . $i;
+                $placeholders[] = ':' . $paramName;
+                $params[$paramName] = $category;
+            }
+            $sql .= " AND EXISTS (SELECT 1 FROM product_categories pc JOIN categories c ON pc.category_id = c.id 
+                      WHERE pc.product_id = p.id AND c.name IN (" . implode(',', $placeholders) . "))";
+        }
+        
+        if (!empty($filters['sizes'])) {
+            $sizes = is_array($filters['sizes']) ? $filters['sizes'] : explode(',', $filters['sizes']);
+            $placeholders = [];
+            foreach ($sizes as $i => $size) {
+                $paramName = 'size_' . $i;
+                $placeholders[] = ':' . $paramName;
+                $params[$paramName] = $size;
+            }
+            $sql .= " AND EXISTS (SELECT 1 FROM product_sizes ps JOIN sizes s ON ps.size_id = s.id 
+                      WHERE ps.product_id = p.id AND s.name IN (" . implode(',', $placeholders) . "))";
+        }
+        
+        if (!empty($filters['colors'])) {
+            $colors = is_array($filters['colors']) ? $filters['colors'] : explode(',', $filters['colors']);
+            $placeholders = [];
+            foreach ($colors as $i => $color) {
+                $paramName = 'color_' . $i;
+                $placeholders[] = ':' . $paramName;
+                $params[$paramName] = $color;
+            }
+            $sql .= " AND EXISTS (SELECT 1 FROM product_colors pc JOIN colors c ON pc.color_id = c.id 
+                      WHERE pc.product_id = p.id AND c.name IN (" . implode(',', $placeholders) . "))";
+        }
+        
+        if (!empty($filters['min_price']) && is_numeric($filters['min_price'])) {
+            $sql .= " AND p.price >= :min_price";
+            $params['min_price'] = (float)$filters['min_price'];
+        }
+        
+        if (!empty($filters['max_price']) && is_numeric($filters['max_price'])) {
+            $sql .= " AND p.price <= :max_price";
+            $params['max_price'] = (float)$filters['max_price'];
+        }
+        
+        $sql .= " ORDER BY p.id DESC";
+        
+        try {
+            $rows = $db->execQuery($sql, $params);
+        } catch (Exception $e) {
+            error_log("Database error: " . $e->getMessage());
+            return [];
+        }
+
+        $products = [];
+        foreach ($rows as $row) {
+            $products[] = new self($row);
+        }
+
+        return $products;
+    }
+
+    public static function getAvailableBrands()
+    {
+        $db = new Database(__DIR__ . '/../SQLite/Mydatabase/Navyrost.db');
+        $sql = "SELECT DISTINCT brand FROM products ORDER BY brand";
+        
+        try {
+            $rows = $db->execQuery($sql);
+        } catch (Exception $e) {
+            error_log("Database error: " . $e->getMessage());
+            return [];
+        }
+        
+        return array_column($rows, 'brand');
+    }
+
+    public static function getAvailableCategories()
+    {
+        $db = new Database(__DIR__ . '/../SQLite/Mydatabase/Navyrost.db');
+        $sql = "SELECT DISTINCT name FROM categories ORDER BY name";
+        
+        try {
+            $rows = $db->execQuery($sql);
+        } catch (Exception $e) {
+            error_log("Database error: " . $e->getMessage());
+            return [];
+        }
+        
+        return array_column($rows, 'name');
+    }
+
+    public static function getAvailableSizes()
+    {
+        $db = new Database(__DIR__ . '/../SQLite/Mydatabase/Navyrost.db');
+        $sql = "SELECT DISTINCT name FROM sizes ORDER BY name";
+        
+        try {
+            $rows = $db->execQuery($sql);
+        } catch (Exception $e) {
+            error_log("Database error: " . $e->getMessage());
+            return [];
+        }
+        
+        return array_column($rows, 'name');
+    }
+
+    public static function getAvailableColors()
+    {
+        $db = new Database(__DIR__ . '/../SQLite/Mydatabase/Navyrost.db');
+        $sql = "SELECT DISTINCT name FROM colors ORDER BY name";
+        
+        try {
+            $rows = $db->execQuery($sql);
+        } catch (Exception $e) {
+            error_log("Database error: " . $e->getMessage());
+            return [];
+        }
+        
+        return array_column($rows, 'name');
+    }
+
+    public static function findById(int $id): Product
+    {
+        $db = new Database(__DIR__ . '/../SQLite/Mydatabase/Navyrost.db');
+
+        $sql = "SELECT 
+                p.id, p.name, p.price, p.image, p.description,
+                p.gender, p.brand,
+                (SELECT GROUP_CONCAT(DISTINCT s.name) 
+                 FROM product_sizes ps 
+                 JOIN sizes s ON ps.size_id = s.id 
+                 WHERE ps.product_id = p.id) AS sizes,
+                (SELECT GROUP_CONCAT(DISTINCT c.name) 
+                 FROM product_colors pc 
+                 JOIN colors c ON pc.color_id = c.id 
+                 WHERE pc.product_id = p.id) AS colors,
+                (SELECT GROUP_CONCAT(DISTINCT cat.name)
+                 FROM product_categories pc
+                 JOIN categories cat ON pc.category_id = cat.id
+                 WHERE pc.product_id = p.id) AS category
+            FROM products p
+            WHERE p.id = :id";
+
+        try {
+            $rows = $db->execQuery($sql, ['id' => $id]);
+        } catch (Exception $e) {
+            error_log("Database error: " . $e->getMessage());
+            return new self([]);
+        }
+
+        return !empty($rows) ? new self($rows[0]) : new self([]);
     }
 }

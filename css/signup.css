@@ -1,0 +1,370 @@
+/* Стилі для сторінки реєстрації */
+.register-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.register-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+}
+
+.register-form h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.register-form p {
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #b09b7b;
+    outline: none;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 8px;
+    color: #777;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.checkbox-group input {
+    width: auto;
+    margin-right: 10px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #b09b7b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+.register-btn:hover {
+    background-color: #86755b;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.login-link a {
+    color: #b09b7b;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.terms {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: #777;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .register-form {
+        padding: 30px 20px;
+    }
+    
+    .register-form h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Додаткові стилі для сторінки входу */
+.forgot-password {
+    color: #777;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: #b09b7b;
+    text-decoration: underline;
+}
+
+.social-login {
+    margin-top: 30px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    color: #777;
+    font-size: 0.9rem;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.divider::before {
+    margin-right: 10px;
+}
+
+.divider::after {
+    margin-left: 10px;
+}
+
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.social-btn:hover {
+    background: #f8f8f8;
+}
+
+.social-btn i {
+    font-size: 1rem;
+}
+
+.google-btn {
+    color: #DB4437;
+    border-color: #DB4437;
+}
+
+.google-btn:hover {
+    background-color: rgba(219, 68, 55, 0.1);
+}
+
+.facebook-btn {
+    color: #4267B2;
+    border-color: #4267B2;
+}
+
+.facebook-btn:hover {
+    background-color: rgba(66, 103, 178, 0.1);
+}
+
+.top-header {
+    background-color: #b09b7b;
+    color: white;
+    padding: 12px 0;
+    font-size: 14px;
+}
+
+.header-menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.middle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.header h1 {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+.bottom-header {
+    background-color: #fff;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+.nav-item a:hover {
+    color: #b09b7b;
+}
+
+.nav-item:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nav-item {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-item > span {
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-item > span::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #b09b7b;
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover > span::after {
+    width: 100%;
+}
+
+.nav-item:hover {
+    color: #b09b7b;
+}
+
+.social-icons,
+.action-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons i,
+.action-icons i {
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.social-icons i:hover,
+.action-icons i:hover {
+    opacity: 0.7;
+}
+
+.password-requirements {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.password-requirements ul {
+    margin: 5px 0 0 15px;
+    padding-left: 15px;
+}
+
+.password-requirements li {
+    list-style-type: disc;
+    line-height: 1.4;
+}

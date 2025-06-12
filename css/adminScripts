@@ -1,0 +1,12 @@
+.parser-table {
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .parser-table th {
+            background: #f8f9fa;
+        }
+        .tag-level-0 { color: #0d6efd; }
+        .tag-level-1 { color: #198754; }
+        .tag-level-2 { color: #dc3545; }

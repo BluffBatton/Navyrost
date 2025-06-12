@@ -631,3 +631,154 @@
     max-height: 100%;
     transition: transform 0.3s;
 }
+
+.size-table tr.size-row {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.size-table tr.size-row:hover {
+    background-color: #f5f5f5;
+}
+
+.size-table tr.size-row.selected {
+    background-color: #b09b7b;
+    color: white;
+}
+
+.size-table tr.size-row.selected td {
+    color: white;
+}
+
+/* Стилі для коментарів */
+.comments-section {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+
+.comment-form {
+    margin-bottom: 30px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 100px;
+    margin-bottom: 15px;
+    resize: vertical;
+}
+
+.rating {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating input[type="radio"]:checked ~ label {
+    color: #ffc107;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #ffc107;
+}
+
+.comment-form button {
+    background: #b09b7b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background: #86755b;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.comment-date {
+    color: #777;
+    font-size: 14px;
+}
+
+.comment-rating {
+    color: #ffc107;
+    font-size: 18px;
+}
+
+.comment-text {
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.delete-comment-form {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.delete-comment {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+}
+
+.delete-comment:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
